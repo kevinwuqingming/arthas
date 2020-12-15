@@ -1,5 +1,6 @@
 var ws;
 var xterm;
+var currentConnectedAgentId;
 
 $(function () {
     var url = window.location.href;
@@ -19,7 +20,7 @@ $(function () {
         $('#agentId').val(agentId);
     }
 
-    startConnect(true);
+    //startConnect(true);
 });
 
 /** get params in url **/
@@ -79,7 +80,7 @@ function getTerminalSize () {
 /** init websocket **/
 function initWs (ip, port, path, agentId, targetServer) {
     var protocol= location.protocol === 'https:'  ? 'wss://' : 'ws://';
-    var uri = protocol + ip + ':' + port + '/' + encodeURIComponent(path) + '?method=connectArthas&id=' + agentId;
+    var uri = protocol + ip + ':' + port + '/' + encodeURIComponent(path) + '?method=connectArthas&id=' + agentId + '&cp=' + cp;
     if (targetServer != null) {
         uri = uri + '&targetServer=' + encodeURIComponent(targetServer);
     }
@@ -117,7 +118,7 @@ function startConnect (silent) {
         alert('Already connected');
         return;
     }
-    
+
     var path = getUrlParam('path');
     if (path == null) {
         path = "ws";
@@ -158,6 +159,66 @@ function startConnect (silent) {
         ws.send(JSON.stringify({action: 'resize', cols: terminalSize.cols, rows: terminalSize.rows}));
         window.setInterval(function () {
             if (ws != null && ws.readyState === 1) {
+                ws.send(JSON.stringify({action: 'read', data: ""}));
+            }
+        }, 30000);
+    }
+}
+
+/** begin connect **/
+function startConnectWithAgentId (agentId) {
+    var ip = window.location.hostname;
+
+    if (agentId == '' || agentId == null) {
+        alert('AgentId can not be empty');
+        return;
+    }
+    if (ws != null) {
+        if(currentConnectedAgentId == agentId){
+            alert(currentConnectedAgentId + " already connected.");
+            return;
+        }
+        ws.close();
+        ws = null;
+    }
+    var path = getUrlParam('path');
+    if (path == null) {
+        path = "ws";
+    }
+    // init webSocket
+    initWs(ip, port, path, agentId);
+    ws.onerror = function () {
+        ws = null;
+        alert('Connect error');
+    };
+    ws.onclose = function (message) {
+        if (message.code === 2000) {
+            alert(message.reason);
+        }
+        currentConnectedAgentId = "";
+    };
+    ws.onopen = function () {
+        console.log('open');
+        currentConnectedAgentId = agentId;
+        $('#fullSc').show();
+        var terminalSize = getTerminalSize()
+        console.log('terminalSize')
+        console.log(terminalSize)
+        // init xterm
+        initXterm(terminalSize.cols, terminalSize.rows)
+        ws.onmessage = function (event) {
+            if (event.type === 'message') {
+                var data = event.data;
+                xterm.write(data);
+            }
+        };
+        xterm.open(document.getElementById('terminal'));
+        xterm.on('data', function (data) {
+            ws.send(JSON.stringify({action: 'read', data: data}))
+        });
+        ws.send(JSON.stringify({action: 'resize', cols: terminalSize.cols, rows: terminalSize.rows}));
+        window.setInterval(function () {
+            if (ws != null) {
                 ws.send(JSON.stringify({action: 'read', data: ""}));
             }
         }, 30000);

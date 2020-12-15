@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>热更</title>
+
+    <!-- Bootstrap -->
+    <link href="./vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css">
+    <!-- Font Awesome -->
+    <link href="./vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="./vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="./vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- Dropzone.js -->
+    <link href="./vendors/dropzone/dist/min/dropzone.min.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="./vendors/gentelella/css/custom.min.css" rel="stylesheet">
+</head>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Goodluck!</span></a>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <!-- menu profile quick info -->
+                <!-- /menu profile quick info -->
+
+                <br/>
+
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div class="menu_section">
+                        <ul class="nav side-menu">
+                            <li><a><i class="fa fa-table"></i> 服务器管理 <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="console">Wonsole</a></li>
+                                    <li><a href="redefine">热更新</a></li>
+                                    <li><a href="bsh">BSH</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /sidebar menu -->
+
+                <!-- /menu footer buttons -->
+                <div class="sidebar-footer hidden-small">
+                    <a data-toggle="tooltip" data-placement="top" title="Settings">
+                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                    </a>
+                    <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                        <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                    </a>
+                    <a data-toggle="tooltip" data-placement="top" title="Lock">
+                        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                    </a>
+                    <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                    </a>
+                </div>
+                <!-- /menu footer buttons -->
+            </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <div class="nav toggle">
+                    <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                </div>
+                <nav class="nav navbar-nav">
+                    <ul class=" navbar-right">
+                        <li class="nav-item dropdown open" style="padding-left: 15px;">
+                            <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true"
+                               id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                                John Doe
+                            </a>
+                            <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="javascript:;"> Profile</a>
+                                <a class="dropdown-item" href="javascript:;">
+                                    <span class="badge bg-red pull-right">50%</span>
+                                    <span>Settings</span>
+                                </a>
+                                <a class="dropdown-item" href="javascript:;">Help</a>
+                                <a class="dropdown-item" href="login.html"><i class="fa fa-sign-out pull-right"></i> Log
+                                    Out</a>
+                            </div>
+                        </li>
+
+                        <li role="presentation" class="nav-item dropdown open">
+                            <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1"
+                               data-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-envelope-o"></i>
+                                <span class="badge bg-green">6</span>
+                            </a>
+                            <ul class="dropdown-menu list-unstyled msg_list" role="menu"
+                                aria-labelledby="navbarDropdown1">
+                                <li class="nav-item">
+                                    <a class="dropdown-item">
+                                        <span class="image"><img src="images/img.jpg" alt="Profile Image"/></span>
+                                        <span>
+                            <span>John Smith</span>
+                            <span class="time">3 mins ago</span>
+                          </span>
+                                        <span class="message">
+                            Film festivals used to be do-or-die moments for movie makers. They were where...
+                          </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="dropdown-item">
+                                        <span class="image"><img src="images/img.jpg" alt="Profile Image"/></span>
+                                        <span>
+                            <span>John Smith</span>
+                            <span class="time">3 mins ago</span>
+                          </span>
+                                        <span class="message">
+                            Film festivals used to be do-or-die moments for movie makers. They were where...
+                          </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="dropdown-item">
+                                        <span class="image"><img src="images/img.jpg" alt="Profile Image"/></span>
+                                        <span>
+                            <span>John Smith</span>
+                            <span class="time">3 mins ago</span>
+                          </span>
+                                        <span class="message">
+                            Film festivals used to be do-or-die moments for movie makers. They were where...
+                          </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="dropdown-item">
+                                        <span class="image"><img src="images/img.jpg" alt="Profile Image"/></span>
+                                        <span>
+                            <span>John Smith</span>
+                            <span class="time">3 mins ago</span>
+                          </span>
+                                        <span class="message">
+                            Film festivals used to be do-or-die moments for movie makers. They were where...
+                          </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <div class="text-center">
+                                        <a class="dropdown-item">
+                                            <strong>See All Alerts</strong>
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3>热更新 <small></small></h3>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+                <!-- Agent List-->
+                <div class="row" style="display: block;">
+
+                    <div class="col-md-12 col-sm-12  ">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Step1: 选择需要热更的服务器</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="x_content">
+                                <div class="table-responsive">
+                                    <table class="table table-striped jambo_table bulk_action" id="agents">
+                                        <thead>
+                                        <tr class="headings">
+                                            <th>
+                                                <input type="checkbox" id="check-all" class="flat">
+                                            </th>
+                                            <th class="column-title">AgentID</th>
+                                            <th class="bulk-actions" colspan="7">
+                                                <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions (
+                                                    <span class="action-cnt"> </span> ) <i
+                                                            class="fa fa-chevron-down"></i>
+                                                </a>
+                                            </th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <!-- File upload-->
+                <div class="row">
+                    <div class="col-md-12 col-sm-12  ">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Step2: 选择需要热更的Class文件</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content" id="upload">
+                                <div class="dropzone"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- check update-->
+                <div class="row">
+                    <div class="col-md-12 col-sm-12  ">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Step3: 执行检查 &nbsp;&nbsp;</h2>
+                                <button type="button" class="btn btn-primary" onclick="startCheckRedefine()">
+                                  <span class="docs-tooltip" data-toggle="tooltip" title=""
+                                        data-original-title="点击检查ClassLoader">
+                                    <i class="fa fa-play"></i>
+                                  </span>
+                                </button>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content" id="">
+                                <div class="table-responsive">
+                                    <table class="table" id="agentsCheckResult">
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- execute update-->
+                <div class="row">
+                    <div class="col-md-12 col-sm-12  ">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Step4: 执行更新 &nbsp;&nbsp;</h2>
+                                <input type="checkbox" id="chk_replaceSourceCode" class="flat" checked>替换源文件
+                                <button type="button" class="btn btn-primary" onclick="redefine()">
+                                  <span class="docs-tooltip" data-toggle="tooltip" title=""
+                                        data-original-title="点击进行热更">
+                                    <i class="fa fa-play"></i>
+                                  </span>
+                                </button>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <div class="table-responsive">
+                                    <table class="table" id="redefineResult">
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+        <!-- 进度条模态框 -->
+        <div id="progressModal" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static"
+             data-keyboard="false" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 id="processMsg" class="modal-title">进度</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="progress" class="progress">
+                            <div id="progress_rate" class="progress-bar progress-bar-striped active bg-info"
+                                 role="progressbar"
+                                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                                 style="width: 40%;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="closeModal" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- footer content -->
+        <footer>
+            <div class="pull-right">
+                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="./vendors/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="./vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<!-- FastClick -->
+<script src="./vendors/fastclick/lib/fastclick.js"></script>
+<!-- NProgress -->
+<script src="./vendors/nprogress/nprogress.js"></script>
+<!-- iCheck -->
+<script src="./vendors/iCheck/icheck.min.js"></script>
+<!-- Datatables -->
+<script src="./vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="./vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="./vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="./vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="./vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="./vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="./vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="./vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+<script src="./vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="./vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="./vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="./vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+<script src="./vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<script src="./vendors/jszip/dist/jszip.min.js"></script>
+<!-- Dropzone.js -->
+<script src="./vendors/dropzone/dist/min/dropzone.min.js"></script>
+<!-- Custom Theme Scripts -->
+<script src="./vendors/gentelella/js/custom.min.js"></script>
+
+<script>
+    var oTable;
+    $.ajax({//使用ajax的方式获取
+        url: "/agents/getList",//异步请求的接口地址
+        method: "post",//请求方式
+        dataType: "json",//期待的数据返回类型
+        async: true,//是否异步
+        data: {},//请求参数，如果有可添加，键值对的形式或者JSON字符串都可以，根据后台来
+        success: function (data) {//服务器响应成功后执行的回调
+            //初始化datatable
+            if (typeof oTable != "undefined") {
+                //如果已经被实例化，则销毁再实例化
+                oTable.fnDestroy();
+            }
+            oTable = $("#agents").dataTable({//注意#infoTable是需创建为dataTable的表格,使用jQuery选择器
+                "sServerMethod": "POST",//若使用服务端分页，则设置请求方式为“POST”，可改
+                "bServerSide": false,//是否开启服务端分页(不开就是客户端分页)
+                'ordering': false,
+                "sScrollX": "",
+                "data": data,
+                "aoColumns": [//渲染每一列，其实就是配置表头和数据对应显示到哪一列中
+                    {
+                        "mData": "id",
+                        "mRender": function (d, type, full, meta) {//如果需要显示的内容需根据数据封装加工的就写这个属性，0
+                            //回调中有4个参数，d：对应mData中的属性的值；type：对应值的类型；full：对应当前这一行的数据，meta对应dataTable的配置
+                            //如果不清楚可以使用console.log();打印出来看看
+                            var str = '<input type="checkbox" class="flat" name="table_records" id="' + d + '">';
+                            return str;
+                        },
+                        "createdCell": function (td, cellData, rowData, row, col) {
+                            $(td).addClass("a-center ");
+                            $(td).removeClass("sorting_1");
+                        }
+                    },
+                    {
+                        "mData": "id",
+                        "mRender": function (d, type, full, meta) {
+                            var str = '<td class=" ">' + d + '</td>';
+                            return str;
+                        },
+                    }
+                ]
+            });
+        }
+    });
+    Dropzone.autoDiscover = false;
+    var dropz = new Dropzone('div.dropzone', {
+        url: '/fileUpload',
+        autoProcessQueue: true,
+        uploadMultiple: true,
+        parallelUploads: 3,
+        maxFiles: 10,
+        maxFilesize: 2,
+        acceptedFiles: ".class",
+        dictDefaultMessage: "拖拽class文件到此处,或点击此处选择class文件",
+        dictFallbackMessage: "你的浏览器不支持",
+        dictMaxFilesExceeded: "文件数量过多",
+        dictFileTooBig: "可添加的最大文件大小为{{maxFilesize}}Mb，当前文件大小为{{filesize}}Mb ",
+        init: function () {
+            var myDropzone = this;
+            this.on("addedfile", function (file) {
+                var removeButton = Dropzone.createElement("<button class='btn btn-sm btn-block'>移除</button>");
+                removeButton.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    var fileName = file.name;
+                    $.ajax({
+                        url: "/fileRemove",
+                        method: "post",
+                        dataType: "json",
+                        async: false,
+                        data: {"fileName": fileName},
+                        success: function (data, textStatus) {
+                            console.log(data);
+                        }
+                    });
+                    myDropzone.removeFile(file);
+                });
+                file.previewElement.appendChild(removeButton);
+            });
+        },
+        successmultiple: function (file, response) {
+        },
+        completemultiple: function (file, data) {
+        }
+    });
+
+    var checkResultTable;
+    var searchClassResultModel = [];
+    var searchClassResultModelMap = {};
+    function startCheckRedefine() {
+        if (typeof checkResultTable != "undefined") {
+            //如果已经被实例化，则销毁再实例化
+            checkResultTable.fnDestroy();
+        }
+        /** get selected agent ids **/
+        var agentArr = getSelectedAgents();
+        if (agentArr == null || agentArr.length == 0) {
+            alert('no agent selected');
+            return;
+        }
+        if (getUploadFileCount() < 1) {
+            alert('no file upload');
+            return;
+        }
+        searchClassResultModel = [];
+        searchClassResultModelMap = {};
+        $("#progressModal").modal("show");
+        $("#processMsg").text("Class loader 查询中...");
+        $("#closeModal").hide();
+        changeProgress(0);
+        var needManuallySelect = false;
+        for (var i = 0; i < agentArr.length; i++) {
+            var agentId = agentArr[i];
+            $.ajax({
+                url: "/checkUpdate",
+                method: "post",
+                dataType: "json",
+                async: false,
+                data: {"agentId": agentId},
+                success: function (data, textStatus) {
+                    for (var j = 0; j < data.length; j++) {
+                        searchClassResultModel.push(data[j]);
+                        searchClassResultModelMap[data[j].agentId + ',' + data[j].classPath] = data[j];
+                        console.log(data[j]);
+                    }
+                    changeProgress((i + 1)/agentArr.length * 100);
+                }
+            });
+        }
+
+        checkResultTable = $("#agentsCheckResult").dataTable({
+            "data": searchClassResultModel,
+            "paging": false,
+            "searching": false,
+            "aoColumns": [
+                {
+                    "sTitle": "AgentID",
+                    "mData": "agentId"
+                },
+                {
+                    "sTitle": "ClassPath",
+                    "mData": "classPath"
+                },
+                {
+                    "sTitle": "CodeSource",
+                    "mData": "codeSource",
+                    "defaultContent":""
+                },
+                {
+                    "sTitle": "ClassLoader",
+                    "mData": "classLoaderList",
+                    "mRender": function (d, type, full, meta) {
+                        var str = '';
+                        if (d.length > 0) {
+                            for (var i = 0; i < d.length; i++) {
+                                if (i != d.length - 1) {
+                                    str += d[i] + '<br/>';
+                                } else {
+                                    str += d[i];
+                                }
+                            }
+                        }
+                        return str;
+                    }
+                },
+                {
+                    "sTitle": "ClassLoaderHashCode",
+                    "mData": "classLoaderHashCodeList",
+                    "mRender": function (d, type, full, meta) {
+                        if (d.length > 1) {
+                            needManuallySelect = true;
+                            var str = '<select id="' + full.agentId + ',' + full.classPath +'" class="form-control">';
+                            str += '<option value="">请选择</option>';
+                            for (var i = 0; i < d.length; i++) {
+                                str += '<option value="' + d[i] + '">' + d[i] + '</option>';
+                            }
+                            str += "</select>";
+                            return str;
+                        } else {
+                            return d;
+                        }
+                    }
+                }
+            ]
+        });
+        $("select").change(function(){
+            var searchClassResultModelMapElement = searchClassResultModelMap[$(this).attr("id")];
+            if(searchClassResultModelMapElement != null){
+                searchClassResultModelMapElement.selectedClassLoaderHash = $(this).val();
+            }else {
+                alert("SearchClassResultModel not found: " + $(this).attr("id"));
+            }
+        });
+        if(needManuallySelect){
+            $("#processMsg").text("Class loader 查询完成, 存在多个Classloader的情况,需要手动选择!");
+        }else {
+            $("#processMsg").text("Class loader 查询完成.");
+        }
+    }
+
+    function changeProgress(rate) {
+        rate = rate.toFixed(2);
+        $("#progress_rate").css("width", rate + "%");
+        if (rate >= 100) {
+            $("#closeModal").show();
+        }
+    }
+
+    function getSelectedAgents() {
+        var agentArr = [];
+        $('#agents').find("tbody tr td input[type='checkbox']").each(function (i) {
+            if ($(this).is(':checked')) {
+                agentArr.push($(this).attr("id"));
+            }
+        });
+        return agentArr;
+    }
+
+    function getUploadFileCount() {
+        if (dropz == null) {
+            return 0;
+        }
+        return dropz.files.length;
+    }
+
+    var redefineResultTable;
+    function redefine() {
+        if (typeof redefineResultTable != "undefined") {
+            //如果已经被实例化，则销毁再实例化
+            redefineResultTable.fnDestroy();
+        }
+        var selectedAgents = getSelectedAgents();
+        var searchClassResultModelList = [];
+        var checkOk = true;
+        $.each(searchClassResultModelMap,function(i,n){
+            if(n.selectedClassLoaderHash == ""
+            || n.selectedClassLoaderHash == null || n.selectedClassLoaderHash == "undefined"){
+                alert(n.agentId + ":" + n.classPath + "必须指定Class loader hash.");
+                checkOk = false;
+                return;
+            }
+            searchClassResultModelList.push(n);
+        });
+        if(!checkOk){
+            return;
+        }
+        var replaceSourceCode = $("#chk_replaceSourceCode").is(':checked');
+        var data = {"selectedAgents": JSON.stringify(selectedAgents),
+            "searchClassResultModelList": JSON.stringify(searchClassResultModelList),
+            "replaceSourceCode": replaceSourceCode};
+        $.ajax({
+            url: "/redefine",
+            method: "post",
+            dataType: "json",
+            async: false,
+            data: data,
+            success: function (data, textStatus) {
+                console.log(data);
+                var dataArray = [];
+                $.each(selectedAgents,function (i,n) {
+                    if(data[n] == null){
+                        alert(n + ":没有收到热更返回值!");
+                    }
+                })
+                $.each(data,function (i,n) {
+                    dataArray.push(n);
+                })
+                redefineResultTable = $("#redefineResult").dataTable({
+                    "data": dataArray,
+                    "paging": false,
+                    "searching": true,
+                    "aoColumns": [
+                        {
+                            "sTitle": "AgentID",
+                            "mData": "agentId"
+                        },
+                        {
+                            "sTitle": "ResultCode",
+                            "mData": "resultCode"
+                        },
+                        {
+                            "sTitle": "ResultEnumName",
+                            "mData": "resultEnumName"
+                        },
+                        {
+                            "sTitle": "Msg",
+                            "mData": "msg"
+                        }
+                    ]
+                });
+            }
+        });
+
+    }
+
+</script>
+</body>
+</html>

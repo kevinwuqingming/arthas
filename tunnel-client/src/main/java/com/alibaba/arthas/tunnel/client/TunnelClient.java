@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 
 import javax.net.ssl.SSLException;
 
+import com.mechanist.BinaryWebSocketHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,6 +64,12 @@ public class TunnelClient {
 
     private volatile boolean connected = false;
 
+    private BinaryWebSocketHandler binaryWebSocketHandler;
+
+    public void setBinaryWebSocketHandler(BinaryWebSocketHandler binaryWebSocketHandler) {
+        this.binaryWebSocketHandler = binaryWebSocketHandler;
+    }
+
     public ChannelFuture start() throws IOException, InterruptedException, URISyntaxException {
         return connect(false);
     }
@@ -113,6 +120,8 @@ public class TunnelClient {
                 WebSocketVersion.V13, null, true, new DefaultHttpHeaders());
         final WebSocketClientProtocolHandler websocketClientHandler = new WebSocketClientProtocolHandler(newHandshaker);
         final TunnelClientSocketClientHandler handler = new TunnelClientSocketClientHandler(TunnelClient.this);
+
+        handler.setBinaryWebSocketHandler(binaryWebSocketHandler);
 
         Bootstrap bs = new Bootstrap();
 

@@ -13,6 +13,7 @@ public class AgentInfo {
 
     @JsonIgnore
     private ChannelHandlerContext channelHandlerContext;
+    private String id;
     private String host;
     private int port;
     private String arthasVersion;
@@ -49,4 +50,11 @@ public class AgentInfo {
         this.arthasVersion = arthasVersion;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

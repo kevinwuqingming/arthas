@@ -95,6 +95,7 @@ public class LogUtilTest {
             if (appender instanceof RollingFileAppender) {
                 RollingFileAppender fileAppender = (RollingFileAppender) appender;
                 String file = fileAppender.getFile();
+                file = file.replaceAll("/", "\\" + File.separator);
                 Assertions.assertThat(file).isEqualTo(logFile);
                 foundFileAppender = true;
             }
@@ -127,6 +128,7 @@ public class LogUtilTest {
             if (appender instanceof RollingFileAppender) {
                 RollingFileAppender fileAppender = (RollingFileAppender) appender;
                 String file = fileAppender.getFile();
+                file = file.replaceAll("/", "\\" + File.separator);
                 Assertions.assertThat(file).isEqualTo(logFile);
                 foundFileAppender = true;
             }
@@ -159,6 +161,7 @@ public class LogUtilTest {
             if (appender instanceof RollingFileAppender) {
                 RollingFileAppender fileAppender = (RollingFileAppender) appender;
                 String file = fileAppender.getFile();
+                file = file.replaceAll("/", "\\" + File.separator);
                 Assertions.assertThat(file).isEqualTo(logFile);
                 foundFileAppender = true;
             }

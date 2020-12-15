@@ -9,8 +9,14 @@ import java.lang.instrument.Instrumentation;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.security.CodeSource;
+import java.util.HashMap;
+import java.util.Map;
 
+import com.mechanist.configs.ArthasConfig;
+import com.mechanist.configs.Config;
 import com.taobao.arthas.agent.ArthasClassloader;
+import com.taobao.arthas.agent.FeatureCodec;
+import com.taobao.arthas.agent.util.StringUtils;
 
 /**
  * 代理启动类
@@ -22,19 +28,21 @@ public class AgentBootstrap {
     private static final String ARTHAS_BOOTSTRAP = "com.taobao.arthas.core.server.ArthasBootstrap";
     private static final String GET_INSTANCE = "getInstance";
     private static final String IS_BIND = "isBind";
+    private static String agentId = "";
+    private static String logDirAppender = "";
 
     private static PrintStream ps = System.err;
-    static {
+    static void initLog(){
         try {
             File arthasLogDir = new File(System.getProperty("user.home") + File.separator + "logs" + File.separator
-                    + "arthas" + File.separator);
+                    + "arthas" + logDirAppender + File.separator);
             if (!arthasLogDir.exists()) {
                 arthasLogDir.mkdirs();
             }
             if (!arthasLogDir.exists()) {
                 // #572
                 arthasLogDir = new File(System.getProperty("java.io.tmpdir") + File.separator + "logs" + File.separator
-                        + "arthas" + File.separator);
+                        + "arthas" + logDirAppender + File.separator);
                 if (!arthasLogDir.exists()) {
                     arthasLogDir.mkdirs();
                 }
@@ -60,8 +68,47 @@ public class AgentBootstrap {
      */
     private static volatile ClassLoader arthasClassLoader;
 
-    public static void premain(String args, Instrumentation inst) {
-        main(args, inst);
+    public static void premain(String args, Instrumentation inst) throws Exception {
+        loadArthasConfig(args);
+        if(StringUtils.isBlank(ArthasConfig.ARTHAS_CORE_JAR_PATH) && StringUtils.isBlank(args)){
+            throw new Exception("找不到配置");
+        }
+        initLog();
+        if(!StringUtils.isBlank(ArthasConfig.ARTHAS_CORE_JAR_PATH)){
+            main(ArthasConfig.ARTHAS_CORE_JAR_PATH + ";", inst);
+        }else {
+            main(args, inst);
+        }
+    }
+
+    /**
+     * 读取agent端的配置
+     * @param args
+     */
+    private static void loadArthasConfig(String args) {
+        String configPath = System.getProperty("arthas.config.dir", "arthas-config");
+        File arthasConfigDir = new File(configPath);
+        if (arthasConfigDir.exists() && arthasConfigDir.isDirectory()) {
+            System.out.println("arthas-config path :" + arthasConfigDir.getAbsolutePath());
+            Config.load(configPath);
+        }
+        Map<String, String> map = new HashMap<String, String>();
+        if (!StringUtils.isBlank(args)) {
+            String decodedArgs = decodeArg(args);
+            FeatureCodec codec = new FeatureCodec(';', '=');
+            map = codec.toMap(decodedArgs);
+        }
+        //读取agentId,如果vm参数中带有agentId则会覆盖配置文件中的值
+        if (!StringUtils.isBlank(map.get("agentId")) || !StringUtils.isBlank(ArthasConfig.ARTHAS_CORE_AGENT_ID)) {
+            if (!StringUtils.isBlank(ArthasConfig.ARTHAS_CORE_AGENT_ID)) {
+                agentId = ArthasConfig.ARTHAS_CORE_AGENT_ID;
+            }
+
+            if (!StringUtils.isBlank(map.get("agentId"))) {
+                agentId = map.get("agentId");
+            }
+            logDirAppender = "_" + agentId;
+        }
     }
 
     public static void agentmain(String args, Instrumentation inst) {
@@ -88,6 +135,7 @@ public class AgentBootstrap {
     }
 
     private static synchronized void main(String args, final Instrumentation inst) {
+        ps.println("Try to start Arthas server.");
         // 尝试判断arthas是否已在运行，如果是的话，直接就退出
         try {
             Class.forName("java.arthas.SpyAPI"); // 加载不到会抛异常

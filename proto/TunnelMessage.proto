@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+option java_package         = "com.mechanist.proto";
+option java_outer_classname = "TunnelMessage";
+
+import "MsgData.proto";
+
+
+//查询Class加载
+message SearchClassReq
+{
+	int64 requestId = 1;
+	repeated string classPath = 2; //类完整路径
+}
+
+//查询Class加载返回
+message SearchClassResp
+{
+	int64 requestId = 1;
+	repeated SearchClassResult searchClassResult = 2;
+}
+
+//进行热更新
+message RedefineReq
+{
+	int64 requestId = 1;
+	string agentId = 2;
+	repeated RedefineInfo redefineInfoList = 3;
+	bool replaceSourceCode = 4;
+}
+
+//热更新返回
+message RedefineResp
+{
+	int64 requestId = 1;
+	string agentId = 2;
+	int32 statusCode = 3;
+	string msg = 4;
+}
+
+//执行bsh代码
+message RunBshReq
+{
+	int64 requestId = 1;
+	string agentId = 2;
+	string bashContent = 3;
+}
+
+//执行bsh代码返回
+message RunBshResp
+{
+	int64 requestId = 1;
+	string agentId = 2;
+	int32 statusCode = 3;
+	string msg = 4;
+}

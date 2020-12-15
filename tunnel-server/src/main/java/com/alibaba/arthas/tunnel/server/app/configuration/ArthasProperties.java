@@ -58,6 +58,7 @@ public class ArthasProperties {
         private String host;
         private int port;
         private boolean ssl;
+        private int webPort;
         private String path = TunnelServer.DEFAULT_WEBSOCKET_PATH;
 
         /**
@@ -105,6 +106,13 @@ public class ArthasProperties {
             this.path = path;
         }
 
+        public int getWebPort() {
+            return webPort;
+        }
+
+        public void setWebPort(int webPort) {
+            this.webPort = webPort;
+        }
     }
 
     /**

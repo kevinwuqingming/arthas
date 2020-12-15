@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.alibaba.deps.org.objectweb.asm.Type;
+import com.mechanist.proto.MsgData;
 import com.taobao.arthas.core.command.model.ClassDetailVO;
 import com.taobao.arthas.core.command.model.ClassLoaderVO;
 import com.taobao.arthas.core.command.model.ClassVO;
@@ -20,6 +21,7 @@ import com.taobao.text.Decoration;
 import com.taobao.text.ui.Element;
 import com.taobao.text.ui.LabelElement;
 import com.taobao.text.ui.TableElement;
+import com.taobao.text.util.RenderUtil;
 
 import static com.taobao.text.Decoration.bold;
 
@@ -233,6 +235,34 @@ public class ClassUtils {
                     TypeRenderUtils.drawClassLoader(c));
         }
         return table;
+    }
+
+    public static MsgData.ClazzInfo renderClazzInfo(Class<?> clazz) {
+        CodeSource cs = clazz.getProtectionDomain().getCodeSource();
+        MsgData.ClazzInfo.Builder builder = MsgData.ClazzInfo.newBuilder();
+        builder.setClassInfo(StringUtils.classname(clazz));
+        builder.setCodeSource(getCodeSource(cs));
+        builder.setName(StringUtils.classname(clazz));
+        builder.setIsInterface(clazz.isInterface());
+        builder.setIsAnnotation(clazz.isAnnotation());
+        builder.setIsEnum(clazz.isEnum());
+        builder.setIsAnonymousClass(clazz.isAnonymousClass());
+        builder.setIsArray(clazz.isArray());
+        builder.setIsLocalClass(clazz.isLocalClass());
+        builder.setIsMemberClass(clazz.isMemberClass());
+        builder.setIsPrimitive(clazz.isPrimitive());
+        builder.setIsSynthetic(clazz.isSynthetic());
+        builder.setSimpleName(clazz.getSimpleName());
+        builder.setModifier(StringUtils.modifier(clazz.getModifiers(), ','));
+        String[] annotations = TypeRenderUtils.getAnnotations(clazz);
+        builder.setAnnotation(TypeRenderUtils.drawAnnotation(annotations));
+        builder.setInterfaces(TypeRenderUtils.drawInterface(clazz));
+        String[] superClass = TypeRenderUtils.getSuperClass(clazz);
+        builder.setSuperClass(RenderUtil.render(TypeRenderUtils.drawTree(superClass)));
+        ClassVO simpleClassInfo = createSimpleClassInfo(clazz);
+        builder.setClassLoader(RenderUtil.render(TypeRenderUtils.drawClassLoader(simpleClassInfo)));
+        builder.setClassLoaderHash(StringUtils.classLoaderHash(clazz));
+        return builder.build();
     }
 
 }

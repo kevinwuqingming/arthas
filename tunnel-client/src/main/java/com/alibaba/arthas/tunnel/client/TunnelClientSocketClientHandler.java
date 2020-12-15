@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import com.mechanist.BinaryWebSocketHandler;
+import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +39,15 @@ public class TunnelClientSocketClientHandler extends SimpleChannelInboundHandler
 
     private final TunnelClient tunnelClient;
     private ChannelPromise registerPromise;
+    private BinaryWebSocketHandler binaryWebSocketHandler;
+
+    public BinaryWebSocketHandler getBinaryWebSocketHandler() {
+        return binaryWebSocketHandler;
+    }
+
+    public void setBinaryWebSocketHandler(BinaryWebSocketHandler binaryWebSocketHandler) {
+        this.binaryWebSocketHandler = binaryWebSocketHandler;
+    }
 
     public TunnelClientSocketClientHandler(TunnelClient tunnelClient) {
         this.tunnelClient = tunnelClient;
@@ -133,6 +144,12 @@ public class TunnelClientSocketClientHandler extends SimpleChannelInboundHandler
                 }
             }
 
+        }
+
+        if(frame instanceof BinaryWebSocketFrame){
+            if(binaryWebSocketHandler != null){
+                binaryWebSocketHandler.handle(frame, ctx);
+            }
         }
     }
 

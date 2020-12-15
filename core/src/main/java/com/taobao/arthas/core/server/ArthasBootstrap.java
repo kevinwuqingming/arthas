@@ -33,6 +33,10 @@ import com.alibaba.bytekit.asm.instrument.InstrumentTransformer;
 import com.alibaba.bytekit.asm.matcher.SimpleClassMatcher;
 import com.alibaba.bytekit.utils.AsmUtils;
 import com.alibaba.bytekit.utils.IOUtils;
+import com.mechanist.EventReceiverThread;
+import com.mechanist.MsgHandler;
+import com.mechanist.MsgTable;
+import com.mechanist.env.MechanistEnvironment;
 import com.taobao.arthas.common.AnsiLog;
 import com.taobao.arthas.common.ArthasConstants;
 import com.taobao.arthas.common.PidUtils;
@@ -117,6 +121,8 @@ public class ArthasBootstrap {
     private HistoryManager historyManager;
 
     private HttpApiHandler httpApiHandler;
+
+    private MsgHandler msgHandler;
 
     private ArthasBootstrap(Instrumentation instrumentation, Map<String, String> args) throws Throwable {
         this.instrumentation = instrumentation;
@@ -321,7 +327,7 @@ public class ArthasBootstrap {
      * @throws IOException 服务器启动失败
      */
     private void bind(Configure configure) throws Throwable {
-
+        MechanistEnvironment.getInstance().init(configure);
         long start = System.currentTimeMillis();
 
         if (!isBindRef.compareAndSet(false, true)) {
@@ -351,7 +357,12 @@ public class ArthasBootstrap {
                 tunnelClient.setAppName(configure.getAppName());
                 tunnelClient.setId(configure.getAgentId());
                 tunnelClient.setTunnelServerUrl(configure.getTunnelServer());
+                logger().info("tunnelServerUrl:" + configure.getTunnelServer());
                 tunnelClient.setVersion(ArthasBanner.version());
+                msgHandler = new MsgHandler();
+                tunnelClient.setBinaryWebSocketHandler(msgHandler);
+                MsgTable.init();
+                EventReceiverThread.getInstance().start();
                 ChannelFuture channelFuture = tunnelClient.start();
                 channelFuture.await(10, TimeUnit.SECONDS);
             }

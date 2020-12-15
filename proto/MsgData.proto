@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+option java_package         = "com.mechanist.proto";
+option java_outer_classname = "MsgData";
+
+//文件
+message FileInfo
+{
+	string fileName	= 1;	//文件名
+	bytes fileContent = 2;	//文件内容
+}
+
+//热更数据
+message RedefineInfo
+{
+	string classPath = 1;
+	string fileName = 2;
+	bytes fileContent = 3;
+	string hashCode = 4;
+	string codeSource = 5;
+}
+
+//类加载信息
+message ClazzInfo
+{
+	string classInfo = 1;
+	string codeSource = 2;
+	string name = 3;
+	bool isInterface = 4;
+	bool isAnnotation = 5;
+	bool isEnum = 6;
+	bool isAnonymousClass = 7;
+	bool isArray = 8;
+	bool isLocalClass = 9;
+	bool isMemberClass = 10;
+	bool isPrimitive = 11;
+	bool isSynthetic = 12;
+	string simpleName = 13;
+	string modifier = 14;
+	string annotation = 15;
+	string interfaces = 16;
+	string superClass = 17;
+	string classLoader = 18;
+	string classLoaderHash = 19;
+}
+
+//Class加载结果
+message SearchClassResult
+{
+	string classPath = 1;
+	repeated ClazzInfo clazzInfo = 2;
+}
+

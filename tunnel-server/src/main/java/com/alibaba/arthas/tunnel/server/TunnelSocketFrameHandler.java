@@ -12,6 +12,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+import com.alibaba.arthas.tunnel.server.msg.InterfaceMsgDealer;
+import com.alibaba.arthas.tunnel.server.msg.MsgFactory;
+import io.netty.buffer.ByteBuf;
+import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
@@ -113,6 +117,16 @@ public class TunnelSocketFrameHandler extends SimpleChannelInboundHandler<WebSoc
 
                 SimpleHttpResponse simpleHttpResponse = SimpleHttpResponse.fromBytes(bytes);
                 promise.setSuccess(simpleHttpResponse);
+            }
+        }
+
+        if(frame instanceof BinaryWebSocketFrame){
+            BinaryWebSocketFrame binaryWebSocketFrame = (BinaryWebSocketFrame)frame;
+            ByteBuf byteBuf = binaryWebSocketFrame.content();
+            int msgId = byteBuf.readInt();
+            InterfaceMsgDealer msgDealer = MsgFactory.getInstance().getMsgDealer(msgId);
+            if(msgDealer != null){
+                msgDealer.read(byteBuf);
             }
         }
     }
@@ -244,7 +258,7 @@ public class TunnelSocketFrameHandler extends SimpleChannelInboundHandler<WebSoc
                 .encode().toUri();
 
         AgentInfo info = new AgentInfo();
-
+        info.setId(id);
         // 前面可能有nginx代理
         HttpHeaders headers = handshake.requestHeaders();
         String host = headers.get("X-Real-IP");

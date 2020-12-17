@@ -79,12 +79,23 @@ public class TunnelClientSocketClientHandler extends SimpleChannelInboundHandler
             }
 
             if (MethodConstants.AGENT_REGISTER.equals(method)) {
-                List<String> idList = parameters.get(URIConstans.ID);
-                if (idList != null && !idList.isEmpty()) {
-                    this.tunnelClient.setId(idList.get(0));
+                String registerStatus = null;
+                List<String> registerStatusList = parameters.get(URIConstans.AGENT_REGISTER_SUCCESS);
+                if (registerStatusList != null && !registerStatusList.isEmpty()) {
+                    registerStatus = registerStatusList.get(0);
                 }
-                tunnelClient.setConnected(true);
-                registerPromise.setSuccess();
+
+                if ("true".equals(registerStatus)) {
+                    List<String> idList = parameters.get(URIConstans.ID);
+                    if (idList != null && !idList.isEmpty()) {
+                        this.tunnelClient.setId(idList.get(0));
+                    }
+                    tunnelClient.setConnected(true);
+                    registerPromise.setSuccess();
+                }else {
+                    Exception cause = new Exception("Agent register failed.");
+                    registerPromise.setFailure(cause);
+                }
             }
 
             if (MethodConstants.START_TUNNEL.equals(method)) {

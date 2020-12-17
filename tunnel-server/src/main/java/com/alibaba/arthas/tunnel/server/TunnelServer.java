@@ -196,6 +196,11 @@ public class TunnelServer {
         return agentInfoMap;
     }
 
+    public boolean agentRegistered(String agentId)
+    {
+        return agentInfoMap.values().stream().anyMatch(agentInfo -> agentInfo.getId().equals(agentId));
+    }
+
     public void setAgentInfoMap(Map<String, AgentInfo> agentInfoMap) {
         this.agentInfoMap = agentInfoMap;
     }

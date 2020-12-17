@@ -220,7 +220,7 @@ public class TunnelSocketFrameHandler extends SimpleChannelInboundHandler<WebSoc
         }
     }
 
-    private void agentRegister(ChannelHandlerContext ctx, HandshakeComplete handshake, String requestUri) throws URISyntaxException {
+    private synchronized void agentRegister(ChannelHandlerContext ctx, HandshakeComplete handshake, String requestUri) throws URISyntaxException {
         QueryStringDecoder queryDecoder = new QueryStringDecoder(requestUri);
         Map<String, List<String>> parameters = queryDecoder.parameters();
 
@@ -251,12 +251,6 @@ public class TunnelSocketFrameHandler extends SimpleChannelInboundHandler<WebSoc
         }
 
         final String finalId = id;
-
-        // URI responseUri = new URI("response", null, "/", "method=" + MethodConstants.AGENT_REGISTER + "&id=" + id, null);
-        URI responseUri = UriComponentsBuilder.newInstance().scheme(URIConstans.RESPONSE).path("/")
-                .queryParam(URIConstans.METHOD, MethodConstants.AGENT_REGISTER).queryParam(URIConstans.ID, id).build()
-                .encode().toUri();
-
         AgentInfo info = new AgentInfo();
         info.setId(id);
         // 前面可能有nginx代理
@@ -268,8 +262,11 @@ public class TunnelSocketFrameHandler extends SimpleChannelInboundHandler<WebSoc
             SocketAddress remoteAddress = ctx.channel().remoteAddress();
             if (remoteAddress instanceof InetSocketAddress) {
                 InetSocketAddress inetSocketAddress = (InetSocketAddress) remoteAddress;
-                info.setHost(inetSocketAddress.getHostString());
-                info.setPort(inetSocketAddress.getPort());
+                host = inetSocketAddress.getHostString();
+                int port = inetSocketAddress.getPort();
+                portStr = String.valueOf(port);
+                info.setHost(host);
+                info.setPort(port);
             }
         } else {
             info.setHost(host);
@@ -283,19 +280,36 @@ public class TunnelSocketFrameHandler extends SimpleChannelInboundHandler<WebSoc
             }
         }
 
-        info.setChannelHandlerContext(ctx);
-        if (arthasVersion != null) {
-            info.setArthasVersion(arthasVersion);
+        // URI responseUri = new URI("response", null, "/", "method=" + MethodConstants.AGENT_REGISTER + "&id=" + id, null);
+        UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance().scheme(URIConstans.RESPONSE).path("/");
+        //判断agentId是否已注册
+        boolean agentRegistered = tunnelServer.agentRegistered(id);
+        if(agentRegistered)
+        {
+            uriComponentsBuilder.queryParam(URIConstans.AGENT_REGISTER_SUCCESS, false);
+            logger.warn("Register failed. host {} try to register with agent id {} which have been registered.", host, id);
+        }else {
+            uriComponentsBuilder.queryParam(URIConstans.AGENT_REGISTER_SUCCESS, true);
         }
+        URI responseUri = uriComponentsBuilder
+                .queryParam(URIConstans.METHOD, MethodConstants.AGENT_REGISTER).queryParam(URIConstans.ID, id).build()
+                .encode().toUri();
 
-        tunnelServer.addAgent(id, info);
-        ctx.channel().closeFuture().addListener(new GenericFutureListener<Future<? super Void>>() {
-            @Override
-            public void operationComplete(Future<? super Void> future) throws Exception {
-                tunnelServer.removeAgent(finalId);
+        if (!agentRegistered) {
+            info.setChannelHandlerContext(ctx);
+            if (arthasVersion != null) {
+                info.setArthasVersion(arthasVersion);
             }
 
-        });
+            tunnelServer.addAgent(id, info);
+            ctx.channel().closeFuture().addListener(new GenericFutureListener<Future<? super Void>>() {
+                @Override
+                public void operationComplete(Future<? super Void> future) throws Exception {
+                    tunnelServer.removeAgent(finalId);
+                }
+
+            });
+        }
 
         ctx.channel().writeAndFlush(new TextWebSocketFrame(responseUri.toString()));
     }

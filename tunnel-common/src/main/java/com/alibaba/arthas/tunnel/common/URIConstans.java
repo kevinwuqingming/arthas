@@ -43,4 +43,6 @@ public class URIConstans {
     public static final String ARTHAS_VERSION = "arthasVersion";
 
     public static final String APP_NAME = "appName";
+
+    public static final String AGENT_REGISTER_SUCCESS = "resisterSuccess";
 }

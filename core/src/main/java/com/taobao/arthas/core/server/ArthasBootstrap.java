@@ -365,9 +365,16 @@ public class ArthasBootstrap {
                 EventReceiverThread.getInstance().start();
                 ChannelFuture channelFuture = tunnelClient.start();
                 channelFuture.await(10, TimeUnit.SECONDS);
+                if(channelFuture.cause() != null)
+                {
+                    channelFuture.channel().close();
+                    throw channelFuture.cause();
+                }
             }
         } catch (Throwable t) {
             logger().error("start tunnel client error", t);
+            System.out.println("start tunnel client error");
+            System.exit(-1);
         }
 
         try {
